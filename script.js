@@ -4,13 +4,7 @@ function displayMessage(message) {
   document.querySelector('.message').textContent = message;
 }
 
-let secretNumber = Math.trunc(Math.random() * 20) + 1;
-let score = 20;
-let highScore = 0;
-
-document.querySelector('.guess').value = '';
-
-document.querySelector('.again').addEventListener('click', function () {
+function resetGame() {
   secretNumber = Math.trunc(Math.random() * 20) + 1;
   score = 20;
   document.querySelector('body').style.backgroundColor = '#222';
@@ -19,10 +13,10 @@ document.querySelector('.again').addEventListener('click', function () {
   document.querySelector('.number').textContent = '?';
   document.querySelector('.score').textContent = score;
   document.querySelector('.guess').value = '';
-});
+}
 
-document.querySelector('.check').addEventListener('click', function () {
-  const guess = Number(document.querySelector('.guess').value);
+function checkGuess() {
+  let guess = Number(document.querySelector('.guess').value);
 
   //When input is not a number
   if (!guess) {
@@ -50,5 +44,23 @@ document.querySelector('.check').addEventListener('click', function () {
       displayMessage('You are a loser! 😢');
       document.querySelector('.score').textContent = 0;
     }
+  }
+}
+
+let secretNumber = Math.trunc(Math.random() * 20) + 1;
+let score = 20;
+let highScore = 0;
+
+document.querySelector('.guess').value = '';
+
+document.querySelector('.again').addEventListener('click', resetGame);
+
+document.querySelector('.check').addEventListener('click', checkGuess);
+
+document.addEventListener('keydown', function (a) {
+  if (a.key === 'Enter') {
+    checkGuess();
+  } else if (a.key === 'r') {
+    resetGame();
   }
 });
